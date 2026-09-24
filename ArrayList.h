@@ -1,90 +1,152 @@
 #pragma once
 
+#include "List.h"
 #include <iostream>
+
 using namespace std;
 
 template <typename T> class ArrayList
 {
   public:
-    ArrayList() : size(0) {}
+    // ArrayList() : size(0) {}
 
-    void add(T item) // adds to the front of the array
+    // void add(T item) // adds to the front of the array
+    // {
+    //     if (size >= CAPACITY)
+    //     {
+    //         cout << "Array is full" << endl;
+    //         return;
+    //     }
+
+    //     for (int i = size; i > 0; i--)
+    //     {
+    //         data[i] = data[i - 1];
+    //     }
+    //     data[0] = item;
+    //     size++;
+    // }
+    // void deletefront()
+    // {
+    //     if (size == 0)
+    //     {
+    //         cout << "Array is empty" << endl;
+    //         return;
+    //     }
+    //     for (int i = 0; i < size; i++)
+    //     {
+    //         data[i] = data[i + 1];
+    //     }
+    //     size--;
+    // }
+
+    // bool search(T item)
+    // {
+    //     if (size == 0)
+    //     {
+    //         cout << "Array is empty" << endl;
+    //         return false;
+    //     }
+    //     for (int i = 0; i < size; i++)
+    //     {
+    //         if (data[i] == item)
+    //             return true;
+    //     }
+    //     return false;
+    // }
+
+    // void printArray()
+    // {
+    //     for (int i = 0; i < size; i++)
+    //     {
+    //         cout << data[i] << ",";
+    //     }
+    //     cont::endl;
+    // }
+
+    // void adbaback(T item) // adds back to the back of array
+    // {
+    //     if (size >= CAPACITY)
+    //     {
+    //         cout << "Array is full" << endl;
+    //         return;
+    //     }
+
+    //     data[size] = item;
+    //     size++;
+    // }
+
+    // void deleteback()
+    // {
+    //     if (size == 0)
+    //     {
+    //         cout << "Array is empty" << endl;
+    //         return;
+    //     }
+    //     size--;
+    // }
+
+    void addFront(T *value)
     {
-        if (size >= CAPACITY)
+        if (size_ >= CAPACITY)
         {
             cout << "Array is full" << endl;
             return;
         }
 
-        for (int i = size; i > 0; i--)
+        for (int i = size_; i > 0; i--)
         {
-            data[i] = data[i - 1];
+            data_[i] = data_[i - 1];
         }
-        data[0] = item;
-        size++;
+        data_[0] = *value;
+        ++size_;
     }
-    void deletefront()
+
+    void deleteFront()
     {
-        if (size == 0)
+        if (size_ == 0)
         {
             cout << "Array is empty" << endl;
             return;
         }
-        for (int i = 0; i < size; i++)
+        delete data_[0];
+        for (int i = 0; i < size_ - 1; i++)
         {
-            data[i] = data[i + 1];
+            data_[i] = data_[i + 1];
         }
-        size--;
+        --size_;
     }
 
-    bool search(T item)
+    bool search(T *value) const override
     {
-        if (size == 0)
+        for (int i = 0; i < size_; ++i)
         {
-            cout << "Array is empty" << endl;
-            return false;
-        }
-        for (int i = 0; i < size; i++)
-        {
-            if (data[i] == item)
+            if (*data_[i] == *value)
+            {
                 return true;
+            }
         }
         return false;
     }
 
-    void printArray()
+    void print() const override
     {
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size_; ++i)
         {
-            cout << data[i] << ",";
+            cout << *data_[i] << ", ";
         }
-        cont::endl;
+        cout << endl;
     }
 
-    void adbaback(T item) // adds back to the back of array
+    ~Arraylist() override
     {
-        if (size >= CAPACITY)
+        for (int i = 0; i < size_; ++i)
         {
-            cout << "Array is full" << endl;
-            return;
+            delete data_[i];
         }
-
-        data[size] = item;
-        size++;
-    }
-
-    void deleteback()
-    {
-        if (size == 0)
-        {
-            cout << "Array is empty" << endl;
-            return;
-        }
-        size--;
     }
 
   private:
     static const int CAPACITY = 20;
-    T data[CAPACITY];
+    T *data[CAPACITY];
     int size;
 };
