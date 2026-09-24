@@ -5,10 +5,10 @@
 
 using namespace std;
 
-template <typename T> class ArrayList
+template <typename T> class ArrayList : public List<T>
 {
   public:
-    // ArrayList() : size(0) {}
+    ArrayList() : size_(0) {}
 
     // void add(T item) // adds to the front of the array
     // {
@@ -85,7 +85,7 @@ template <typename T> class ArrayList
     //     size--;
     // }
 
-    void addFront(T *value)
+    void addFront(T *value) override
     {
         if (size_ >= CAPACITY)
         {
@@ -97,11 +97,11 @@ template <typename T> class ArrayList
         {
             data_[i] = data_[i - 1];
         }
-        data_[0] = *value;
+        data_[0] = value;
         ++size_;
     }
 
-    void deleteFront()
+    void deleteFront() override
     {
         if (size_ == 0)
         {
@@ -132,12 +132,12 @@ template <typename T> class ArrayList
     {
         for (int i = 0; i < size_; ++i)
         {
-            cout << *data_[i] << ", ";
+            cout << *data_[i] << ",";
         }
         cout << endl;
     }
 
-    ~Arraylist() override
+    ~ArrayList() override
     {
         for (int i = 0; i < size_; ++i)
         {
@@ -147,6 +147,6 @@ template <typename T> class ArrayList
 
   private:
     static const int CAPACITY = 20;
-    T *data[CAPACITY];
-    int size;
+    T *data_[CAPACITY];
+    int size_;
 };
